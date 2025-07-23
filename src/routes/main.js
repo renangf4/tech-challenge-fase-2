@@ -1,5 +1,5 @@
 import express from "express";
-import notificationsRoutes from "./notificationRoutes.js";
+import postRoutes from "./postRoutes.js";
 import authRoute from "./authRoutes.js";
 
 
@@ -9,14 +9,14 @@ const mainRoute = express.Router();
 mainRoute.get("/",(req,res)=>{
     res.status(200).json({
         "api-version": "1.0",
-        "name" : "notifications",
-        "author" : "Lucas Vida",
-        "git" : "https://github.com/lucasvida"
+        "name" : "posts",
+        "author" : "Grupo FIAP",
+        "git" : "https://github.com/renangf4/tech-challenge-fase-2"
     })
 })
 
 
-mainRoute.use("/", notificationsRoutes);
+mainRoute.use("/", postRoutes);
 mainRoute.use("/", authRoute);
 
 

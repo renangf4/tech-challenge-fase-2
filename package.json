@@ -1,7 +1,7 @@
 {
-  "name": "notificationapi",
+  "name": "postapi",
   "version": "1.0.0",
-  "description": "Api de criar e visualizar notificações",
+  "description": "Api de criar e visualizar posts",
   "main": "server.js",
   "type": "module",
   "license": "AGPL-version-3.0",
@@ -18,7 +18,7 @@
   "bugs": "",
   "keywords": [],
   "author": {
-    "name": "Lucas Vida"
+    "name": "Grupo FIAP"
   },
   "contributors": [],
   "scripts": {
