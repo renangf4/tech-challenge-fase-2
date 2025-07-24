@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: postapi_app
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - DB_URI=mongodb://mongo:27017/postapidb
+      - JWT_KEY=changeme
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
+  mongo:
+    image: mongo:6.0
+    container_name: postapi_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongo_data: 
