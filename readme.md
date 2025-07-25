@@ -1,3 +1,5 @@
+[Documentação Interativa da API](https://apiblogpost.apidog.io/)
+
 # API de Gerenciamento de Posts
 
 Este projeto é uma API RESTful desenvolvida em **Node.js** e **Express** para gerenciar posts. Os dados são armazenados em um banco de dados **MongoDB** e o acesso às rotas é protegido por autenticação JWT.
@@ -89,7 +91,7 @@ Body:
 {
   "title": "Meu Post",
   "content": "Conteúdo do post",
-  "author": "Renan"
+  "author": "Grupo de Estudos"
 }
 ```
 
