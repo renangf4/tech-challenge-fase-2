@@ -1,71 +1,100 @@
-# Desafio - Serviço de Notificação Interna
+# API de Gerenciamento de Posts
 
-Uma empresa de tecnologia deseja implementar um serviço de **notificação interna**.
+Este projeto é uma API RESTful desenvolvida em **Node.js** e **Express** para gerenciar posts. Os dados são armazenados em um banco de dados **MongoDB** e o acesso às rotas é protegido por autenticação JWT.
 
-## Objetivo
+## Funcionalidades
 
-Criar uma aplicação web com **Node.js** e **Express** que permita aos usuários:
+- Adicionar posts
+- Listar todos os posts
+- Buscar posts por critérios (título, conteúdo, autor)
+- Buscar post por ID
+- Atualizar post
+- Excluir post
 
-- Adicionar notificações
-- Listar notificações
-- Excluir notificações
+## Modelo de Dados
 
-## Requisitos adicionais
+Cada post possui os seguintes campos:
 
-- Utilizar **middlewares** para:
-  - Autenticação
-  - Tratamento de erros
+- `title` (string, obrigatório): Título do post
+- `content` (string, obrigatório): Conteúdo do post
+- `author` (string, obrigatório): Autor do post
+- `createdAt` (date, gerado automaticamente): Data de criação
 
-## Observações
+## Requisitos
 
-> ❗ Não é necessário utilizar bancos de dados para este desafio.  
-> Você pode trabalhar com o **fluxo em memória**.
+- Node.js
+- MongoDB (URI de conexão)
 
----
-## Primeiros Passos
+## Instalação
 
-Para começar a usar esta aplicação, siga as instruções abaixo:
-
-### Instalação
-
-Primeiro, você precisará instalar as dependências do projeto. Abra seu terminal na pasta raiz do projeto e execute:
+1. Clone o repositório e acesse a pasta do projeto.
+2. Instale as dependências:
 
 ```bash
 npm install
 ```
 
-### Executando a Aplicação
+3. Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
-Após a instalação, você pode iniciar a aplicação com o seguinte comando:
+```
+PORT=3000
+DB_URI=mongodb://localhost:27017/seubanco
+JWT_KEY=sua_chave_secreta
+```
+
+## Executando a Aplicação
 
 ```bash
 npm start
 ```
 
-### Variáveis de Ambiente
+## Autenticação
 
-Para que a aplicação funcione corretamente, você precisará configurar algumas variáveis de ambiente. Crie um arquivo `.env` na raiz do projeto (se ele ainda não existir) e adicione as seguintes variáveis, substituindo os valores pelos seus próprios:
+Para acessar as rotas protegidas, obtenha um token JWT:
+
+- **GET /v1/auth**
+  - Retorna um token JWT válido por 1 hora.
+
+Inclua o token no header das requisições:
 
 ```
-PORT=
-DB_URI=
-JWT_KEY=
+Authorization: Bearer <seu_token>
 ```
 
-* `PORT`: A porta em que o servidor será executado (ex: `3000`).
-* `DB_URI`: A URI de conexão com o seu banco de dados.
-* `JWT_KEY`: Uma chave secreta para a geração e validação de tokens JWT.
+## Rotas da API
 
-### Autenticação e Rotas
+### Posts
 
-Antes de fazer requisições para a maioria das rotas, você precisará obter um **token de autenticação**.
+- **GET /v1/posts** — Lista todos os posts
+- **GET /v1/posts/search?title=&content=&author=** — Busca posts por critérios (parâmetros opcionais)
+- **GET /v1/posts/:id** — Busca um post pelo ID
+- **POST /v1/posts** — Cria um novo post
+- **PUT /v1/posts/:id** — Atualiza um post existente
+- **DELETE /v1/posts/:id** — Remove um post
 
-1.  **Obter Token**: Faça uma requisição `POST` para a rota `v1/auth` para obter seu token.
-2.  **Requisições Autenticadas**: Com o token em mãos, você poderá fazer requisições para as rotas de notificação, como a `v1/notifications`. Lembre-se de incluir o token no cabeçalho `Authorization` de suas requisições, no formato `Bearer [seu_token]`.
+> Todas as rotas acima exigem autenticação via JWT.
 
-## Exemplode de Requisição (body)
+### Exemplo de Requisição para Criar Post
 
+**POST /v1/posts**
+
+Header:
+```
+Authorization: Bearer <seu_token>
+Content-Type: application/json
+```
+
+Body:
+```json
 {
-  "title": "Teste",
-  "description": "Minha primeira notificação"
+  "title": "Meu Post",
+  "content": "Conteúdo do post",
+  "author": "Renan"
 }
+```
+
+## Observações
+
+- Certifique-se de que o MongoDB está em execução e a URI está correta.
+- O token JWT expira em 1 hora.
+- Todas as respostas são em formato JSON.
