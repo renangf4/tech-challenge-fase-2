@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import env from "dotenv";
 import dbConnect from "./src/config/dbConnect.js";
 import mainRoute from "./src/routes/main.js";
@@ -8,6 +9,14 @@ env.config();
 const app = express();
 
 dbConnect();
+
+// Configuração do CORS
+app.use(cors({
+    origin: "*", // Permite todas as origens - em produção, especifique domínios específicos
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+}));
 
 app.use(express.json());
 
