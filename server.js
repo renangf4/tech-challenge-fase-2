@@ -12,13 +12,29 @@ dbConnect();
 
 // Configuração do CORS
 app.use(cors({
-    origin: "*", // Permite todas as origens - em produção, especifique domínios específicos
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
+    origin: true, // Permite todas as origens
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
+    credentials: true,
+    optionsSuccessStatus: 200 // Para compatibilidade com navegadores legados
 }));
 
 app.use(express.json());
+
+// Middleware para tratar preflight requests manualmente se necessário
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+    
+    next();
+});
 
 app.use("/",mainRoute);
 
