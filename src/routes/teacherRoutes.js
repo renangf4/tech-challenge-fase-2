@@ -1,12 +1,12 @@
 import express from "express";
 import { deleteTeacher, getAllTeachers, createTeacher, getTeacherById, updateTeacher } from "../controllers/teacherControllers.js";
-import { autentication, isTeacher } from "../helpers/auth.js";
+import { autentication, isTeacher, allowFirstTeacherOrAuth } from "../helpers/auth.js";
 
 const teacherRoutes = express.Router();
 
 teacherRoutes.route("/v1/teachers")
   .get(autentication, isTeacher, getAllTeachers)
-  .post(autentication, isTeacher, createTeacher)
+  .post(allowFirstTeacherOrAuth, createTeacher)
 
 teacherRoutes.route("/v1/teachers/:id")
   .get(autentication, isTeacher, getTeacherById)
