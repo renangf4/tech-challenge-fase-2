@@ -20,3 +20,13 @@ export const autentication = (req,res,next) =>{
         })
     }
 }
+
+export const isTeacher = (req, res, next) => {
+    if (req.user && req.user.userType === "teacher") {
+        next();
+    } else {
+        return res.status(403).json({
+            erro: "Acesso negado. Apenas professores podem realizar esta ação."
+        });
+    }
+}

@@ -1,6 +1,8 @@
 import express from "express";
 import postRoutes from "./postRoutes.js";
 import authRoute from "./authRoutes.js";
+import teacherRoutes from "./teacherRoutes.js";
+import studentRoutes from "./studentRoutes.js";
 
 
 const mainRoute = express.Router();
@@ -18,6 +20,8 @@ mainRoute.get("/",(req,res)=>{
 
 mainRoute.use("/", postRoutes);
 mainRoute.use("/", authRoute);
+mainRoute.use("/", teacherRoutes);
+mainRoute.use("/", studentRoutes);
 
 
 export default mainRoute;
